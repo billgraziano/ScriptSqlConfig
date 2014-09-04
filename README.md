@@ -1,6 +1,6 @@
 Script SQL Server Configuration
 ===============
-Script SQL Server configuration information in a format suitable for DR purposes or checking into a source control system.
+Script SQL Server configuration information in a format suitable for disaster recovery purposes or checking into a source control system.
 
 Server level objects (linked servers, audits, etc.) are scripted in one file per object type.  This makes DR easier and reviewing history possible.  Database level objects (tables, functions, etc.) are scripted in one file per object.  This makes reviewing object history easy and DR possible.  The database backup is the primary DR mechanism for databases.
 
@@ -35,3 +35,7 @@ The following user database objects can be scripted:
 * User-defined functions
 * Users, Database roles and application roles
 * Service Broker Objects
+
+Requirements
+------------
+SQL Server 2012 with SMO must be installed on the server where this utility is running.
