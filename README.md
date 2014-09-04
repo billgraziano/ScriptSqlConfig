@@ -1,5 +1,6 @@
-ScriptSqlConfig
+Script SQL Server Configuration
 ===============
+Script SQL Server configuration information in a format suitable for DR purposes or checking into a source control system.
 
 Server level objects (linked servers, audits, etc.) are scripted in one file per object type.  This makes DR easier and reviewing history possible.  Database level objects (tables, functions, etc.) are scripted in one file per object.  This makes reviewing object history easy and DR possible.  The database backup is the primary DR mechanism for databases.
 
