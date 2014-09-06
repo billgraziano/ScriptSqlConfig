@@ -39,3 +39,7 @@ The following user database objects can be scripted:
 Requirements
 ------------
 SQL Server 2012 with SMO must be installed on the server where this utility is running.
+
+Notes
+-----
+Earlier versions of the source code and a 2008 version can be found on CodePlex at https://scriptsqlconfig.codeplex.com/.
