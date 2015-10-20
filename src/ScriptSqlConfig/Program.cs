@@ -112,7 +112,7 @@ namespace ScriptSqlConfig
             if (TEST_SMO)
             {
                 Helper.TestSMO();
-                return;
+                // return;
             }
 
 			// the server and directory are required.  No args also brings out the help
