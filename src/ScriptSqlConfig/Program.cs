@@ -74,6 +74,10 @@ namespace ScriptSqlConfig
 		static string PASSWORD = "";
         static bool TEST_SMO = false;
 
+
+        static System.Version SERVER_VERSION = new Version();
+        static System.Version SMO_VERSION = new Version();
+
 		static void Main(string[] args)
 		{
 			Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
@@ -91,7 +95,7 @@ namespace ScriptSqlConfig
 			{ "scriptdb=",   z => DATABASE = z } ,
 			{ "u|user=", z => USER_NAME = z },
 			{ "p|password=", z => PASSWORD = z },
-            { "smo", z => TEST_SMO = true },
+            { "testsmo", z => TEST_SMO = true },
 			{ "h|?|help",   z => { SHOW_HELP = true; } } 
 						};
 
@@ -185,7 +189,9 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
             var ver = System.Reflection.Assembly.GetAssembly(typeof(Microsoft.SqlServer.Management.Smo.Server)).GetName().Version;
             WriteMessage("SMO Version: " + ver.ToString());
 
-            
+            /* Set the SQL Server version */
+            SetVersions(SERVER);
+
 
 			if (SCRIPT_INSTANCE)
 				ScriptInstance(SERVER, DIRECTORY);
@@ -200,6 +206,17 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
 #endif
 				
 		}
+
+        private static void SetVersions(string server)
+        {
+            SqlConnection conn = GetConnection(server, "master");
+            Server srv = new Server(new ServerConnection(conn));
+            SERVER_VERSION = srv.Version;
+            conn.Close();
+
+            Assembly a1 = System.Reflection.Assembly.GetAssembly(typeof(Microsoft.SqlServer.Management.Smo.Server));
+            SMO_VERSION = a1.GetName().Version;
+        }
 
 		private static void ScriptInstance(string server, string directory)
 		{
@@ -1229,14 +1246,25 @@ GO
             sc.Add(GetHeaderCommentBlock("Schemas"));
             foreach (Microsoft.SqlServer.Management.Smo.Schema schema in db.Schemas)
             {
+                // SQL Server 2008 SMO is having trouble scripting schema objects - IsSystemObject is failing
+                //if (SMO_VERSION.Major >= 11)
+                //{
+                //    if (1==1 /*!schema.IsSystemObject */)
+                //    {
+                //        if (VERBOSE)
+                //            WriteMessage("Schema: " + schema.Name);
+                //        sc.Append(schema.Script(so));
+                //    }
 
-                if (!schema.IsSystemObject)
-                {
+                //}
+                //else
+                //{
                     if (VERBOSE)
-                        WriteMessage("Route: " + schema.Name);
+                        WriteMessage("Schema: " + schema.Name);
                     sc.Append(schema.Script(so));
-                }
+                //}
 
+                
             }
 
             string fileName = Path.Combine(directory, "Schemas.sql");

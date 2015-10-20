@@ -42,10 +42,10 @@ namespace ScriptSqlConfig
             DisplayAssemblyDetails(System.Reflection.Assembly.GetAssembly(typeof(Microsoft.SqlServer.Management.Dmf.PolicyHealthState)));
             
             
-#if DEBUG
-            Console.WriteLine("Press any key to continue....");
-            Console.ReadLine();
-#endif
+//#if DEBUG
+//            Console.WriteLine("Press any key to continue....");
+//            Console.ReadLine();
+//#endif
         }
 
         public static void DisplayAssemblyDetails(Assembly asm)
