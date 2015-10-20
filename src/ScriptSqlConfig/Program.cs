@@ -57,6 +57,7 @@ using System.Text.RegularExpressions;
 using NDesk.Options;
 
 using System.Reflection;
+using ScriptSqlConfig;
 
 namespace ScriptSqlConfig
 {
@@ -71,12 +72,11 @@ namespace ScriptSqlConfig
 		static bool SHOW_HELP = false;
 		static string USER_NAME = "";
 		static string PASSWORD = "";
+        static bool TEST_SMO = false;
 
 		static void Main(string[] args)
 		{
 			Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-
-
 
 			// use tfpt from the TFS Power Tools
 			// that includes a tfpt that adds all files not in TFS.
@@ -91,6 +91,7 @@ namespace ScriptSqlConfig
 			{ "scriptdb=",   z => DATABASE = z } ,
 			{ "u|user=", z => USER_NAME = z },
 			{ "p|password=", z => PASSWORD = z },
+            { "smo", z => TEST_SMO = true },
 			{ "h|?|help",   z => { SHOW_HELP = true; } } 
 						};
 
@@ -107,6 +108,12 @@ namespace ScriptSqlConfig
 				Console.WriteLine("");
 			}
 
+            WriteMessage("Launching (" + v.Major.ToString() + "." + v.Minor.ToString() + ")....");
+            if (TEST_SMO)
+            {
+                Helper.TestSMO();
+                return;
+            }
 
 			// the server and directory are required.  No args also brings out the help
 			if (SERVER.Length == 0 || DIRECTORY.Length == 0 || args.Length == 0)
@@ -170,7 +177,7 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
 		   #endregion 
 
 
-			WriteMessage("Launching (" + v.Major.ToString() + "." + v.Minor.ToString() + ")....");
+			
 			WriteMessage("Directory: " + DIRECTORY);
 			WriteMessage("Server: " + SERVER);
 
@@ -965,7 +972,7 @@ GO
 			}
 		}
 
-		private static void WriteMessage(string message)
+		public static void WriteMessage(string message)
 		{
 			string output = message;
 			if (VERBOSE)
