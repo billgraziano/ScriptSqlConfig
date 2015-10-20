@@ -56,6 +56,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using NDesk.Options;
 
+using System.Reflection;
+
 namespace ScriptSqlConfig
 {
 	class Program
@@ -73,6 +75,8 @@ namespace ScriptSqlConfig
 		static void Main(string[] args)
 		{
 			Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+
 
 			// use tfpt from the TFS Power Tools
 			// that includes a tfpt that adds all files not in TFS.
@@ -169,6 +173,12 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
 			WriteMessage("Launching (" + v.Major.ToString() + "." + v.Minor.ToString() + ")....");
 			WriteMessage("Directory: " + DIRECTORY);
 			WriteMessage("Server: " + SERVER);
+
+            /* Display the SMO version */
+            var ver = System.Reflection.Assembly.GetAssembly(typeof(Microsoft.SqlServer.Management.Smo.Server)).GetName().Version;
+            WriteMessage("SMO Version: " + ver.ToString());
+
+            
 
 			if (SCRIPT_INSTANCE)
 				ScriptInstance(SERVER, DIRECTORY);
