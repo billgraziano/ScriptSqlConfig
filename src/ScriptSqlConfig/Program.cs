@@ -156,6 +156,7 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
 	/scriptdb   (Database to script.  This will script a single 
 				 database in addition to the instance scripts.)
 	/?          (Display this help)
+    /testsmo    (Test loading the SMO libraries)
 
 	Sample Usage
 	----------------------------------------------------------------
