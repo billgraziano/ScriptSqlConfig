@@ -40,9 +40,9 @@ Requirements
 ------------
 This requires a SQL Server installation from SQL Server 2008, 2008 R2, 2012, or 2014.
 
-You can control which version of SMO is loaded by updating the app.config file.
+You can control which version of SMO is loaded by updating the `ScriptSqlConfig.exe.config` file.
 
-By default it loads the SQL Server 2012 version of SMO.  To change this, uncomment the `<runtime>` section of the app.config file.  You'll see a number of entries that look like this:
+By default it loads the SQL Server 2012 version of SMO.  To change this, uncomment the `<runtime>` section of the `ScriptSqlConfig.exe.config` file.  You'll see a number of entries that look like this:
 
       <dependentAssembly>
         <assemblyIdentity name="Microsoft.SqlServer.Smo"
@@ -53,9 +53,9 @@ By default it loads the SQL Server 2012 version of SMO.  To change this, uncomme
         <bindingRedirect oldVersion="11.0.0.0" newVersion="10.0.0.0" />
       </dependentAssembly>
 
-Simply update the `newVersion` attribute with the version of SMO you'd like to target.  A comment in the app.config files includes instructions and the version numbers.    
+Simply update the `newVersion` attribute with the version of SMO you'd like to target.  A comment in the `ScriptSqlConfig.exe.config` files includes instructions and the version numbers.    
 
 
 Notes
 -----
-Earlier versions of the source code and a 2008 version can be found on CodePlex at https://scriptsqlconfig.codeplex.com/.
+Earlier versions of the source code and a 2008 version can be found on CodePlex at https://scriptsqlconfig.codeplex.com/.  This shouldn't be needed now since this version can load the 2008 SMO libraries if needed.
