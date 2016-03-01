@@ -38,7 +38,23 @@ The following user database objects can be scripted:
 
 Requirements
 ------------
-SQL Server 2012 with SMO must be installed on the server where this utility is running.
+This requires a SQL Server installation from SQL Server 2008, 2008 R2, 2012, or 2014.
+
+You can control which version of SMO is loaded by updating the app.config file.
+
+By default it loads the SQL Server 2012 version of SMO.  To change this, uncomment the `<runtime>` section of the app.config file.  You'll see a number of entries that look like this:
+
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.SqlServer.Smo"
+          publicKeyToken="89845dcd8080cc91"
+          culture="neutral" />
+         Assembly versions can be redirected in application, 
+          publisher policy, or machine configuration files. 
+        <bindingRedirect oldVersion="11.0.0.0" newVersion="10.0.0.0" />
+      </dependentAssembly>
+
+Simply update the `newVersion` attribute with the version of SMO you'd like to target.  A comment in the app.config files includes instructions and the version numbers.    
+
 
 Notes
 -----
