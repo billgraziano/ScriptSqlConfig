@@ -247,19 +247,19 @@ ScriptSqlConfig.EXE (" + v.ToString() + @")
 			if (VERBOSE)
 				WriteMessage("Getting target server version through SMO");
 
-			try
-			{
-				so.TargetServerVersion = GetTargetServerVersion(srv);
-			}
-			catch (ConnectionFailureException ex)
-			{
-				WriteMessage("Error: " + ex.Message);
-				if (ex.InnerException is SqlException)
-				{
-					WriteMessage("Error: " + ex.InnerException.Message);
-				}
-				System.Environment.Exit(1);
-			}
+            //try
+            //{
+            //    so.TargetServerVersion = GetTargetServerVersion(srv);
+            //}
+            //catch (ConnectionFailureException ex)
+            //{
+            //    WriteMessage("Error: " + ex.Message);
+            //    if (ex.InnerException is SqlException)
+            //    {
+            //        WriteMessage("Error: " + ex.InnerException.Message);
+            //    }
+            //    System.Environment.Exit(1);
+            //}
 			so.Triggers = false;
 			so.AnsiPadding = false;
 
@@ -334,27 +334,27 @@ GO
 			WriteFile(script, Path.Combine(directory, "Event Notifications.sql"), false);
 		}
 
-		private static SqlServerVersion GetTargetServerVersion(Server srv)
-		{
-			string version = srv.VersionMajor.ToString() + srv.VersionMinor.ToString();
-			if (version == "80")
-				return SqlServerVersion.Version80;
+        //private static SqlServerVersion GetTargetServerVersion(Server srv)
+        //{
+        //    string version = srv.VersionMajor.ToString() + srv.VersionMinor.ToString();
+        //    if (version == "80")
+        //        return SqlServerVersion.Version80;
    
-			if (version == "90")
-				return SqlServerVersion.Version90;
+        //    if (version == "90")
+        //        return SqlServerVersion.Version90;
    
-			if (version == "100")
-				return SqlServerVersion.Version100;
+        //    if (version == "100")
+        //        return SqlServerVersion.Version100;
 
-			if (version == "1050")
-				return SqlServerVersion.Version105;
+        //    if (version == "1050")
+        //        return SqlServerVersion.Version105;
 
-			if (version == "110")
-				return SqlServerVersion.Version110;
+        //    if (version == "110")
+        //        return SqlServerVersion.Version110;
 
-			throw new Exception("Unsupported Server Version");
+        //    throw new Exception("Unsupported Server Version");
 			
-		}
+        //}
 
 		private static void WriteServerProperties(Server smoServer, string directory)
 		{
@@ -1020,7 +1020,7 @@ GO
 			SqlConnection conn = GetConnection(server, database);
 			Server srv = new Server(new ServerConnection(conn));
 
-			so.TargetServerVersion = GetTargetServerVersion(srv);
+			// so.TargetServerVersion = GetTargetServerVersion(srv);
 			Database db = srv.Databases[database];
 
 			srv.SetDefaultInitFields(typeof(StoredProcedure), "IsSystemObject");
