@@ -1021,6 +1021,7 @@ GO
 			Server srv = new Server(new ServerConnection(conn));
 
 			// so.TargetServerVersion = GetTargetServerVersion(srv);
+            // Console.WriteLine(so.TargetServerVersion);
 			Database db = srv.Databases[database];
 
 			srv.SetDefaultInitFields(typeof(StoredProcedure), "IsSystemObject");
