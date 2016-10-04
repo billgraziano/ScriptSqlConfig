@@ -42,7 +42,7 @@ This requires a SQL Server installation from SQL Server 2008, 2008 R2, 2012, or 
 
 You can control which version of SMO is loaded by updating the `ScriptSqlConfig.exe.config` file.
 
-By default it loads the latest version of SMO.  To change this, uncomment the `<runtime>` section of the `ScriptSqlConfig.exe.config` file.  
+By default it loads the SQL Server 2012 version of SMO.  To change this, uncomment the `<runtime>` section of the `ScriptSqlConfig.exe.config` file.  
 You'll see a number of entries that look like this:
 
       <dependentAssembly>
