@@ -73,6 +73,7 @@ namespace ScriptSqlConfig
 		static string USER_NAME = "";
 		static string PASSWORD = "";
         static bool TEST_SMO = false;
+        static bool HASHEDPASSWORDS = false;
 
 
         static System.Version SERVER_VERSION = new Version();
@@ -96,6 +97,7 @@ namespace ScriptSqlConfig
 			{ "u|user=", z => USER_NAME = z },
 			{ "p|password=", z => PASSWORD = z },
             { "testsmo", z => TEST_SMO = true },
+            { "hashedpasswords", z => HASHEDPASSWORDS = true },
 			{ "h|?|help",   z => { SHOW_HELP = true; } } 
 						};
 
@@ -527,6 +529,7 @@ GO
 						createLogin = @"IF NOT EXISTS (SELECT * FROM [master].[sys].[sql_logins] WHERE [name] = '" + rdr.GetString(rdr.GetOrdinal("name")) + @"')
 	CREATE LOGIN [" + rdr.GetString(rdr.GetOrdinal("name")) + @"] 
 		WITH ";
+                        if (HASHEDPASSWORDS)
                             createLogin += @"
             PASSWORD = " + passwordHash + @" HASHED,";
                         else
