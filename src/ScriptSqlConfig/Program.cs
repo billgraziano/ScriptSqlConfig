@@ -526,13 +526,22 @@ GO
 
 						createLogin = @"IF NOT EXISTS (SELECT * FROM [master].[sys].[sql_logins] WHERE [name] = '" + rdr.GetString(rdr.GetOrdinal("name")) + @"')
 	CREATE LOGIN [" + rdr.GetString(rdr.GetOrdinal("name")) + @"] 
-		WITH PASSWORD = " + passwordHash + @" HASHED,
-		SID = " + Sid + @",  CHECK_POLICY=OFF, ";
+		WITH ";
+                            createLogin += @"
+            PASSWORD = " + passwordHash + @" HASHED,";
+                        else
+                            createLogin += @"
+            PASSWORD = '___password___',";
+                        createLogin += @"
+            SID = " + Sid + @",  
+            CHECK_POLICY=OFF, 
+";
 
-						if (rdr.GetBoolean(rdr.GetOrdinal("is_expiration_checked")))
-							createLogin += "CHECK_EXPIRATION = ON";
-						else
-							createLogin += "CHECK_EXPIRATION = OFF";
+
+                        if (rdr.GetBoolean(rdr.GetOrdinal("is_expiration_checked")))
+                            createLogin += "            CHECK_EXPIRATION = ON";
+                        else
+                            createLogin += "            CHECK_EXPIRATION = OFF";
 
 
 						createLogin += @"
